@@ -38,9 +38,7 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 app.use("/uploads", express.static(__dirname + "/uploads"));
 
-mongoose.connect(
-  "mongodb+srv://dipeshp16:xj4gg5zIKD70oQ7D@cluster0.lkcfv3r.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
-);
+mongoose.connect(process.env.MONGO);
 
 app.post("/sign", async (req, res, next) => {
   const { username, password } = req.body;
