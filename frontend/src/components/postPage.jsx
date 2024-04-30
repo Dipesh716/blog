@@ -5,6 +5,7 @@ import { UserContext } from "../UserContext";
 import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
 import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 export default function PostPage() {
   const [postInfo, setPostInfo] = useState(null);
@@ -18,7 +19,20 @@ export default function PostPage() {
     });
   }, []);
 
-  if (!postInfo) return "";
+  if (!postInfo) {
+    return "/";
+  }
+
+  async function deletePost() {
+    try {
+      const response = await fetch(`http://localhost:3000/deletePost/${id}`);
+      if ((await response.json()) === "ok") {
+        return "/";
+      }
+    } catch (err) {
+      throw err;
+    }
+  }
 
   return (
     <div className="post-page">
@@ -31,6 +45,12 @@ export default function PostPage() {
             <Button variant="contained" color="secondary">
               {" "}
               <EditIcon /> Edit this post
+            </Button>
+          </Link>
+          <Link className="delete-btn" to={`/`}>
+            <Button variant="contained" color="error" onClick={deletePost}>
+              {" "}
+              <DeleteIcon /> Delete this post
             </Button>
           </Link>
         </div>

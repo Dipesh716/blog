@@ -167,6 +167,16 @@ app.get("/post/:id", async (req, res) => {
   res.json(postDoc);
 });
 
+app.get("/deletePost/:id", async (req, res) => {
+  const { id } = req.params;
+  const deletedPost = await Post.findByIdAndDelete(id);
+  if (!deletedPost) {
+    return res.status(404).json({ message: "Post not found" });
+  } else {
+    res.json("ok");
+  }
+});
+
 app.listen(port, () => {
   console.log(`App listening on port ${port}`);
 });

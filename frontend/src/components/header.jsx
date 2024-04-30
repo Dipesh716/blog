@@ -25,6 +25,9 @@ export default function Header() {
       method: "POST",
     });
     setUserInfo(null);
+    if (setUserInfo(null)) {
+      return "/";
+    }
   }
 
   const username = userInfo?.username;
